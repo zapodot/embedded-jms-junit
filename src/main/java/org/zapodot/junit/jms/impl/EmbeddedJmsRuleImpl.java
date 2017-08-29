@@ -113,20 +113,20 @@ public class EmbeddedJmsRuleImpl implements EmbeddedJmsRule {
     }
 
     private BrokerService createBrokerService(final String name) {
-        final BrokerService brokerService = new BrokerService();
-        brokerService.setPersistent(persistent);
-        brokerService.setBrokerName(name);
-        brokerService.setStartAsync(false);
+        final BrokerService broker = new BrokerService();
+        broker.setPersistent(persistent);
+        broker.setBrokerName(name);
+        broker.setStartAsync(false);
         tempDir = Files.createTempDir();
-        brokerService.setDataDirectoryFile(tempDir);
+        broker.setDataDirectoryFile(tempDir);
         try {
-            brokerService.addConnector(createVmTransportServer(createVmTransportUri(name)));
+            broker.addConnector(createVmTransportServer(createVmTransportUri(name)));
         } catch (Exception e) {
             throw new IllegalStateException("Could not create VM Transport URI", e);
         }
-        brokerService.setUseJmx(false);
+        broker.setUseJmx(false);
 
-        return brokerService;
+        return broker;
     }
 
     private TransportServer createVmTransportServer(final URI vmUri) {
