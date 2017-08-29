@@ -30,6 +30,7 @@
         </license>
     </licenses>
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>4.12</junit.version>
         <activemq.version>5.15.0</activemq.version>
         <slf4j.version>1.7.25</slf4j.version>
@@ -67,6 +68,44 @@
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <windowtitle>Embedded JMS JUnit Rule API</windowtitle>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <links>
+                        <link>http://junit.org/javadoc/latest/</link>
+                        <link>http://docs.oracle.com/javase/8/docs/api/</link>
+                        <link>http://activemq.apache.org/maven/apidocs/</link>
+                    </links>
+                    <locale>en</locale>
+                    <keywords>true</keywords>
+                    <defaultAuthor>zapodot at gmail dot com</defaultAuthor>
+                    <header>Embedded JMS JUnit Rule API</header>
+                    <footer>This library and its documentation is made available under Apache Licence v.2.0</footer>
+                </configuration>
             </plugin>
         </plugins>
     </build>
