@@ -45,6 +45,8 @@
         <maven-nexus-staging-plugin.version>1.6.8</maven-nexus-staging-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
+        <maven-coveralls-plugin.version>4.3.0</maven-coveralls-plugin.version>
+        <maven-cobertura-plugin.version>2.7</maven-cobertura-plugin.version>
     </properties>
     <issueManagement>
         <system>github</system>
@@ -124,6 +126,21 @@
                     <defaultAuthor>zapodot at gmail dot com</defaultAuthor>
                     <header>Embedded JMS JUnit Rule API</header>
                     <footer>This library and its documentation is made available under Apache Licence v.2.0</footer>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+                <version>${maven-coveralls-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>${maven-cobertura-plugin.version}</version>
+                <configuration>
+                    <format>xml</format>
+                    <maxmem>256m</maxmem>
+                    <aggregate>true</aggregate>
                 </configuration>
             </plugin>
             <plugin>
