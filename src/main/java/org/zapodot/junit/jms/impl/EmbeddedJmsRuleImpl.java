@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+/**
+ * Implementation. Part of the internal API
+ */
 public class EmbeddedJmsRuleImpl implements EmbeddedJmsRule {
 
     private final String predefinedName;
@@ -38,7 +41,7 @@ public class EmbeddedJmsRuleImpl implements EmbeddedJmsRule {
 
     @Override
     public ActiveMQConnectionFactory activeMqConnectionFactory() {
-        if(brokerService == null) {
+        if (brokerService == null) {
             throw new IllegalStateException("Can not create ConnectionFactory before the broker has started");
         } else {
             return new ActiveMQConnectionFactory(brokerService.getVmConnectorURI());
@@ -47,7 +50,7 @@ public class EmbeddedJmsRuleImpl implements EmbeddedJmsRule {
 
     @Override
     public URI brokerUri() {
-        if(brokerService == null) {
+        if (brokerService == null) {
             throw new IllegalStateException("Can not create broker URI before the broker has started");
         } else {
             return brokerService.getVmConnectorURI();
@@ -70,7 +73,7 @@ public class EmbeddedJmsRuleImpl implements EmbeddedJmsRule {
     }
 
     private String getBrokerName(final Description description) {
-        if(predefinedName == null) {
+        if (predefinedName == null) {
             return extractNameFromDescription(description);
         } else {
             return predefinedName;
@@ -78,7 +81,8 @@ public class EmbeddedJmsRuleImpl implements EmbeddedJmsRule {
     }
 
     private String extractNameFromDescription(final Description description) {
-        return description.getTestClass() == null ? description.getClassName() : description.getTestClass().getSimpleName();
+        return description.getTestClass() == null ? description.getClassName() : description.getTestClass()
+                                                                                            .getSimpleName();
     }
 
     private void startService(final String name) {
