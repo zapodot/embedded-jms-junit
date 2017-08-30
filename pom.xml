@@ -6,7 +6,7 @@
 
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-jms-junit</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.2-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>Library that provides a JUnit rule for setting up unit test using an embedded JMS broker (ActiveMQ)
     </description>
