@@ -29,6 +29,11 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+    <scm>
+        <connection>scm:git:git@github.com:zapodot/embedded-jms-junit.git</connection>
+        <developerConnection>scm:git:git@github.com:zapodot/embedded-jms-junit.git</developerConnection>
+        <url>https://github.com/zapodot/embedded-jms-junit</url>
+    </scm>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
