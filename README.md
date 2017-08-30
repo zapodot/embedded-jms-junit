@@ -20,7 +20,6 @@ This library will in the future be distributed through the [Sonatype OSS repo](h
 * version 0.1: initial release
 
 ## Usage
-**Note: The project has not been released to Maven Central yet**
 ### Add dependency
 ```xml
 <dependency>
