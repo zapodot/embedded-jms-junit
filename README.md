@@ -48,3 +48,4 @@ libraryDependencies += "org.zapodot" % "embedded-jms-junit" % "0.1" % "test"
 
     }
 ```
+For more examples check the JUnit tests in this project
