@@ -16,7 +16,8 @@ It should be compatible with all the usual JMS integration tools such as Apache 
 * I found myself repeating myself and decided that creating this library would make my life easier :-)
 
 ## Status
-This library will in the future be distributed through the [Sonatype OSS repo](https://oss.sonatype.org/) and should thus be widely available. Java 8 or higher is required.
+This library is distributed through the [Sonatype OSS repo](https://oss.sonatype.org/) and should thus be widely available. Java 8 or higher is required.
+Feedback is more than welcome. Feel free to create issues if you find bugs or have feature requests for future releases :-)
 
 ## Changelog
 * version 0.1: initial release
