@@ -12,7 +12,8 @@ It should be compatible with all the usual JMS integration tools such as Apache 
 
 ## Why?
 * because you want to test your JMS integration code without being dependent on a running external JMS Broker
-* setting up the broker manually for all your test leads requires a lot of boilerplate code 
+* setting up the broker manually for all your tests requires a lot of boilerplate code
+* I found myself repeating myself and decided that creating this library would make my life easier :-)
 
 ## Status
 This library will in the future be distributed through the [Sonatype OSS repo](https://oss.sonatype.org/) and should thus be widely available. Java 8 or higher is required.
