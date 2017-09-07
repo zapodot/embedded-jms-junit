@@ -8,7 +8,7 @@ embedded-jms-junit
 [![Coverage Status](https://coveralls.io/repos/github/zapodot/embedded-jms-junit/badge.svg?branch=master)](https://coveralls.io/github/zapodot/embedded-jms-junit?branch=master)
 
 [JUnit](http://junit.org/) Rule that provides a [ActiveMQ Embedded in-memory JMS Broker](http://activemq.apache.org/). 
-It should be compatible with all the usual JMS integration tools such as Apache Camel and Spring JMS Template.
+It should be compatible with all the usual JMS integration tools such as Apache Camel and Spring JMS Template. Inspired by the [Embedded DB JUnit Rule](//github.com/zapodot/embedded-db-junit) project.
 
 ## Why?
 * because you want to test your JMS integration code without being dependent on a running external JMS Broker
