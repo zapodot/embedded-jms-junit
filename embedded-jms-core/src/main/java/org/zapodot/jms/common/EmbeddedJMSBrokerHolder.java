@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+/**
+ * Internal API. May be removed, moved or changed without prior deprecation
+ */
 public class EmbeddedJMSBrokerHolder implements AutoCloseable, ConnectionFactoryAccessor, ActiveMQConnectionFactoryAccessor, BrokerURIAccessor {
     private static final Logger LOGGER = LoggerFactory.getLogger(EmbeddedJMSBrokerHolder.class);
 
