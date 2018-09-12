@@ -9,6 +9,7 @@
     <version>0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
+        <module>embedded-jms-core</module>
         <module>embedded-jms-junit</module>
         <module>embedded-jms-junit5</module>
     </modules>
@@ -205,6 +206,11 @@
     </profiles>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.zapodot</groupId>
+                <artifactId>embedded-jms-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
