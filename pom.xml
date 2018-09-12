@@ -135,7 +135,8 @@
                         <windowtitle>Embedded JMS JUnit Rule API</windowtitle>
                         <encoding>${project.build.sourceEncoding}</encoding>
                         <links>
-                            <link>http://junit.org/javadoc/latest/</link>
+                            <link>https://junit.org/junit4/javadoc/latest/</link>
+                            <link>https://junit.org/junit5/docs/current/api/</link>
                             <link>http://docs.oracle.com/javase/8/docs/api/</link>
                             <link>http://activemq.apache.org/maven/apidocs/</link>
                         </links>

@@ -2,6 +2,9 @@ package org.zapodot.junit5.jms.internal;
 
 import java.util.Objects;
 
+/**
+ * BrokerConfiguration - part of the internal API. May be removed, moved or changed without prior deprecation
+ */
 public class BrokerConfiguration {
 
     public static final BrokerConfiguration DEFAULT = BrokerConfigurationBuilder.instance().withMarshal(false)

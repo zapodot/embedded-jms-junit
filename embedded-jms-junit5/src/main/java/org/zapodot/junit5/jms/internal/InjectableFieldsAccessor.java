@@ -9,6 +9,9 @@ import java.lang.reflect.Field;
 import java.net.URI;
 import java.util.List;
 
+/**
+ * InjectableFieldsAccessor - part of the internal API. May be removed, moved or changed without prior deprecation
+ */
 class InjectableFieldsAccessor {
 
     private InjectableFieldsAccessor() {

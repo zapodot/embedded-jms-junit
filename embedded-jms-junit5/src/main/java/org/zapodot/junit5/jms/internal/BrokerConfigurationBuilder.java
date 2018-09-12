@@ -5,6 +5,9 @@ import org.zapodot.junit5.jms.annotations.BrokerConfig;
 
 import java.util.Optional;
 
+/**
+ * BrokerConfigurationBuilder - part of the internal API. May be removed, moved or changed without prior deprecation
+ */
 public final class BrokerConfigurationBuilder {
     private String name;
 
