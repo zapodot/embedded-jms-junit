@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.jms.core.JmsOperations;
 import org.springframework.jms.core.JmsTemplate;
-import org.zapodot.junit5.jms.annotations.InjectEmbeddedJMS;
+import org.zapodot.junit5.jms.annotations.EmbeddedJms;
 
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
@@ -19,14 +19,14 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SuppressWarnings("squid:S00112")
-@ExtendWith(EmbeddedJMSBroker.class)
-class EmbeddedJMSBrokerRequestReplySpringTest {
+@ExtendWith(EmbeddedJmsBroker.class)
+class EmbeddedJmsBrokerRequestReplySpringTest {
 
     private static final String TEST_MESSAGE = "Test message";
 
     private static final String DESTINATION = "queue:destination";
 
-    @InjectEmbeddedJMS
+    @EmbeddedJms
     private ConnectionFactory connectionFactory;
 
     @DisplayName("Request/reply using Spring JMS Template")

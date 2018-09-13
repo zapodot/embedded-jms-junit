@@ -6,7 +6,6 @@ import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
-import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 import org.junit.jupiter.api.extension.TestInstancePostProcessor;
 import org.junit.platform.commons.util.AnnotationUtils;
@@ -14,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zapodot.jms.common.EmbeddedJMSBrokerHolder;
 import org.zapodot.junit5.jms.annotations.BrokerConfig;
-import org.zapodot.junit5.jms.annotations.InjectEmbeddedJMS;
+import org.zapodot.junit5.jms.annotations.EmbeddedJms;
 import org.zapodot.junit5.jms.internal.BrokerConfiguration;
 import org.zapodot.junit5.jms.internal.BrokerConfigurationBuilder;
 import org.zapodot.junit5.jms.internal.FieldInjector;
@@ -26,9 +25,9 @@ import java.lang.reflect.Parameter;
 import java.net.URI;
 import java.util.Optional;
 
-public class EmbeddedJMSBroker implements BeforeEachCallback, AfterEachCallback, TestInstancePostProcessor, ParameterResolver {
+public class EmbeddedJmsBroker implements BeforeEachCallback, AfterEachCallback, TestInstancePostProcessor, ParameterResolver {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EmbeddedJMSBroker.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmbeddedJmsBroker.class);
 
     private static final ExtensionContext.Namespace EMBEDDED_JMS_EXT = ExtensionContext.Namespace
             .create("org.zapodot.junit5.jms");
@@ -109,13 +108,13 @@ public class EmbeddedJMSBroker implements BeforeEachCallback, AfterEachCallback,
 
     @Override
     public boolean supportsParameter(final ParameterContext parameterContext,
-                                     final ExtensionContext extensionContext) throws ParameterResolutionException {
-        return parameterContext.isAnnotated(InjectEmbeddedJMS.class);
+                                     final ExtensionContext extensionContext) {
+        return parameterContext.isAnnotated(EmbeddedJms.class);
     }
 
     @Override
     public Object resolveParameter(final ParameterContext parameterContext,
-                                   final ExtensionContext context) throws ParameterResolutionException {
+                                   final ExtensionContext context) {
         final Parameter parameter = parameterContext.getParameter();
         final EmbeddedJMSBrokerHolder embeddedJMSBrokerHolder = context.getStore(EMBEDDED_JMS_EXT)
                                                                        .get(STORE_EMBEDDED_JMS_BROKER,

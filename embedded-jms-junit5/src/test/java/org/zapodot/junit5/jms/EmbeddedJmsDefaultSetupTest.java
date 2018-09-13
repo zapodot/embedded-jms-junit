@@ -3,7 +3,7 @@ package org.zapodot.junit5.jms;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.zapodot.junit5.jms.annotations.InjectEmbeddedJMS;
+import org.zapodot.junit5.jms.annotations.EmbeddedJms;
 
 import javax.jms.ConnectionFactory;
 import java.net.URI;
@@ -11,16 +11,16 @@ import java.net.URI;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@ExtendWith(EmbeddedJMSBroker.class)
-class InjectEmbeddedJMSDefaultSetupTest {
+@ExtendWith(EmbeddedJmsBroker.class)
+class EmbeddedJmsDefaultSetupTest {
 
-    @InjectEmbeddedJMS
+    @EmbeddedJms
     private ConnectionFactory connectionFactory;
 
-    @InjectEmbeddedJMS
+    @EmbeddedJms
     private ActiveMQConnectionFactory activeMQConnectionFactory;
 
-    @InjectEmbeddedJMS
+    @EmbeddedJms
     private URI brokerUri;
 
 

@@ -6,6 +6,7 @@ import com.google.common.io.MoreFiles;
 import com.google.common.io.RecursiveDeleteOption;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.broker.BrokerService;
+import org.apache.activemq.store.memory.MemoryPersistenceAdapter;
 import org.apache.activemq.transport.TransportServer;
 import org.apache.activemq.transport.vm.VMTransportFactory;
 import org.slf4j.Logger;
@@ -68,7 +69,15 @@ public class EmbeddedJMSBrokerHolder implements AutoCloseable, ConnectionFactory
         brokerService.setBrokerName(name);
         brokerService.setStartAsync(false);
         brokerService.setPersistent(persistent);
+        try {
+            if (persistent) {
+                brokerService.setPersistenceAdapter(new MemoryPersistenceAdapter());
+            }
+        } catch (IOException e) {
+            throw new IllegalStateException("Could not enable the MemoryPersistenceAdapter");
+        }
         brokerService.setDataDirectoryFile(tempDir);
+
         brokerService.setUseShutdownHook(false);
         try {
             brokerService.addConnector(createVmTransportServer(createVmTransportUri(name, marshal)));

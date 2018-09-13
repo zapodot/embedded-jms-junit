@@ -2,7 +2,7 @@ package org.zapodot.junit5.jms.internal;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.junit.platform.commons.util.AnnotationUtils;
-import org.zapodot.junit5.jms.annotations.InjectEmbeddedJMS;
+import org.zapodot.junit5.jms.annotations.EmbeddedJms;
 
 import javax.jms.ConnectionFactory;
 import java.lang.reflect.Field;
@@ -20,7 +20,7 @@ class InjectableFieldsAccessor {
 
     static List<Field> findInjectableFields(final Class<?> type) {
         return AnnotationUtils.findAnnotatedFields(type,
-                                                   InjectEmbeddedJMS.class,
+                                                   EmbeddedJms.class,
                                                    field -> ConnectionFactory.class
                                                            .isAssignableFrom(field.getType()) ||
                                                            ActiveMQConnectionFactory.class

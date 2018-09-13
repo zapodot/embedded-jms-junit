@@ -3,19 +3,19 @@ package org.zapodot.junit5.jms;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.zapodot.junit5.jms.annotations.InjectEmbeddedJMS;
+import org.zapodot.junit5.jms.annotations.EmbeddedJms;
 
 import javax.jms.ConnectionFactory;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DisplayName("Injection using @RegisterExtension on static field")
-class EmbeddedJMSBrokerRegisterExtensionStaticFieldTest {
+class EmbeddedJmsBrokerRegisterExtensionStaticFieldTest {
 
     @RegisterExtension
-    static EmbeddedJMSBroker embeddedJMSBroker = new EmbeddedJMSBroker();
+    static EmbeddedJmsBroker embeddedJMSBroker = new EmbeddedJmsBroker();
 
-    @InjectEmbeddedJMS
+    @EmbeddedJms
     private ConnectionFactory connectionFactory;
 
     @DisplayName("injection on fields works")

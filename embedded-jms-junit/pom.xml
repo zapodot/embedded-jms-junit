@@ -33,6 +33,12 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
@@ -92,7 +98,7 @@
             <!-- Added to support running Camel based tests on Java 11 -->
             <id>java11</id>
             <activation>
-                <jdk>11</jdk>
+                <jdk>[9,)</jdk>
             </activation>
             <dependencies>
                 <dependency>
