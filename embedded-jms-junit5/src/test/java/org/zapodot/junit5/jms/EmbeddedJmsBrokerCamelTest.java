@@ -12,12 +12,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.zapodot.junit5.jms.annotations.BrokerConfig;
 import org.zapodot.junit5.jms.annotations.EmbeddedJms;
 
 import javax.jms.ConnectionFactory;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@BrokerConfig(persistence = "false")
 @ExtendWith(EmbeddedJmsBroker.class)
 class EmbeddedJmsBrokerCamelTest {
 
@@ -36,10 +38,13 @@ class EmbeddedJmsBrokerCamelTest {
     public void setup() throws Exception {
         final ActiveMQComponent activeMQComponent = new ActiveMQComponent();
         activeMQComponent.setConnectionFactory(connectionFactory);
+        activeMQComponent.setUseSingleConnection(true);
+
         this.registry = new JndiRegistry(ImmutableMap.of("activemq", activeMQComponent));
 
         this.camelContext = new DefaultCamelContext(registry);
         camelContext.setName(EmbeddedJmsBrokerCamelTest.class.getSimpleName() + "Context");
+
         try {
             this.camelContext.addRoutes(new RouteBuilder() {
                 @Override
