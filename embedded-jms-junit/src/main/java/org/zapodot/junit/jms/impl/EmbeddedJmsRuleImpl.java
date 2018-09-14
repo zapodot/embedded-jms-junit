@@ -1,21 +1,13 @@
 package org.zapodot.junit.jms.impl;
 
-import com.google.common.io.Files;
-import com.google.common.io.MoreFiles;
-import com.google.common.io.RecursiveDeleteOption;
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.apache.activemq.broker.BrokerService;
-import org.apache.activemq.transport.TransportServer;
-import org.apache.activemq.transport.vm.VMTransportFactory;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
+import org.zapodot.jms.common.EmbeddedJMSBrokerHolder;
 import org.zapodot.junit.jms.EmbeddedJmsRule;
 
 import javax.jms.ConnectionFactory;
-import java.io.File;
-import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 
 /**
  * Implementation. Part of the internal API
@@ -25,8 +17,8 @@ public class EmbeddedJmsRuleImpl implements EmbeddedJmsRule {
     private final String predefinedName;
     private final boolean marshal;
     private final boolean persistent;
-    private BrokerService brokerService;
-    private File tempDir;
+
+    private EmbeddedJMSBrokerHolder jmsBrokerHolder;
 
     public EmbeddedJmsRuleImpl(final String predefinedName, final boolean marshal, final boolean persistent) {
         this.predefinedName = predefinedName;
@@ -41,19 +33,19 @@ public class EmbeddedJmsRuleImpl implements EmbeddedJmsRule {
 
     @Override
     public ActiveMQConnectionFactory activeMqConnectionFactory() {
-        if (brokerService == null) {
+        if (jmsBrokerHolder == null) {
             throw new IllegalStateException("Can not create ConnectionFactory before the broker has started");
         } else {
-            return new ActiveMQConnectionFactory(brokerService.getVmConnectorURI());
+            return jmsBrokerHolder.getActiveMQConnectionFactory();
         }
     }
 
     @Override
     public URI brokerUri() {
-        if (brokerService == null) {
+        if (jmsBrokerHolder == null) {
             throw new IllegalStateException("Can not create broker URI before the broker has started");
         } else {
-            return brokerService.getVmConnectorURI();
+            return jmsBrokerHolder.getBrokerUri();
         }
     }
 
@@ -87,8 +79,8 @@ public class EmbeddedJmsRuleImpl implements EmbeddedJmsRule {
 
     private void startService(final String name) {
         try {
-            brokerService = createBrokerService(name);
-            brokerService.start(true);
+            jmsBrokerHolder = EmbeddedJMSBrokerHolder.create(name, marshal, persistent);
+            jmsBrokerHolder.start();
         } catch (Exception e) {
             throw new IllegalStateException("Could not start broker", e);
         }
@@ -96,44 +88,9 @@ public class EmbeddedJmsRuleImpl implements EmbeddedJmsRule {
 
     private void stopService() {
         try {
-            brokerService.stop();
-            MoreFiles.deleteRecursively(tempDir.toPath(), RecursiveDeleteOption.ALLOW_INSECURE);
-            brokerService = null;
+            jmsBrokerHolder.close();
         } catch (Exception e) {
             throw new IllegalStateException("Could not stop broker", e);
-        }
-    }
-
-    private URI createVmTransportUri(final String name) {
-        try {
-            return new URI(String.format("vm://%s?marshal=%s", name, marshal));
-        } catch (URISyntaxException e) {
-            throw new IllegalStateException("Could not create an URI for the VM Transport", e);
-        }
-    }
-
-    private BrokerService createBrokerService(final String name) {
-        final BrokerService broker = new BrokerService();
-        broker.setPersistent(persistent);
-        broker.setBrokerName(name);
-        broker.setStartAsync(false);
-        tempDir = Files.createTempDir();
-        broker.setDataDirectoryFile(tempDir);
-        try {
-            broker.addConnector(createVmTransportServer(createVmTransportUri(name)));
-        } catch (Exception e) {
-            throw new IllegalStateException("Could not create VM Transport URI", e);
-        }
-        broker.setUseJmx(false);
-
-        return broker;
-    }
-
-    private TransportServer createVmTransportServer(final URI vmUri) {
-        try {
-            return new VMTransportFactory().doBind(vmUri);
-        } catch (IOException e) {
-            throw new IllegalStateException("Could not setup VM transport", e);
         }
     }
 
