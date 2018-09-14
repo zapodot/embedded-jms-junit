@@ -25,6 +25,9 @@ import java.lang.reflect.Parameter;
 import java.net.URI;
 import java.util.Optional;
 
+/**
+ * A JUnit 5 Jupiter Extension for running an embedded Apache ActiveMQ JMS broker for testing purposes.
+ */
 public class EmbeddedJmsBroker implements BeforeEachCallback, AfterEachCallback, TestInstancePostProcessor, ParameterResolver {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmbeddedJmsBroker.class);

@@ -15,9 +15,24 @@ import java.lang.annotation.Target;
 @Inherited
 @Documented
 public @interface BrokerConfig {
+    /**
+     * The name of the broker. If not specified it will default to the name of the test method
+     *
+     * @return the provided
+     */
     String name() default "";
 
+    /**
+     * Whether marshalling of messages should be enabled or not (default: false)
+     *
+     * @return a boolean string
+     */
     String marshall() default "";
 
+    /**
+     * Whether message persistence should be enabled or not. Default is false
+     *
+     * @return a boolean string
+     */
     String persistence() default "";
 }
