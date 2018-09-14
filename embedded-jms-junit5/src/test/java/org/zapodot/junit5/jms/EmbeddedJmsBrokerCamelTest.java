@@ -16,6 +16,7 @@ import org.zapodot.junit5.jms.annotations.BrokerConfig;
 import org.zapodot.junit5.jms.annotations.EmbeddedJms;
 
 import javax.jms.ConnectionFactory;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -43,6 +44,8 @@ class EmbeddedJmsBrokerCamelTest {
         this.registry = new JndiRegistry(ImmutableMap.of("activemq", activeMQComponent));
 
         this.camelContext = new DefaultCamelContext(registry);
+        camelContext.getShutdownStrategy().setTimeout(1L);
+        camelContext.getShutdownStrategy().setTimeUnit(TimeUnit.MINUTES);
         camelContext.setName(EmbeddedJmsBrokerCamelTest.class.getSimpleName() + "Context");
 
         try {
