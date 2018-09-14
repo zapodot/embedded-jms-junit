@@ -13,7 +13,7 @@
         <module>embedded-jms-junit</module>
         <module>embedded-jms-junit5</module>
     </modules>
-    <name>${project.artifactId}</name>
+    <name>Embedded JMS Testing utilities</name>
     <description>Library that provides a JUnit rule for setting up unit test using an embedded JMS broker (ActiveMQ)
     </description>
     <url>https://github.com/zapodot/embedded-jms-junit</url>
@@ -292,17 +292,7 @@
                 <version>${camel.version}</version>
                 <scope>test</scope>
             </dependency>
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-test</artifactId>
-                <version>${camel.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>junit</groupId>
-                        <artifactId>junit</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
+
             <dependency>
                 <groupId>org.apache.activemq</groupId>
                 <artifactId>activemq-camel</artifactId>

@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>embedded-jms-junit</artifactId>
-    <name>${project.artifactId}</name>
+    <name>Embedded JMS JUnit4 @Rule</name>
 
     <dependencies>
         <dependency>

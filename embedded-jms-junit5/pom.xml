@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>embedded-jms-junit5</artifactId>
-    <name>${project.artifactId}</name>
+    <name>Embedded JMS JUnit5 Jupiter Extension</name>
     <dependencies>
         <dependency>
             <groupId>org.zapodot</groupId>
