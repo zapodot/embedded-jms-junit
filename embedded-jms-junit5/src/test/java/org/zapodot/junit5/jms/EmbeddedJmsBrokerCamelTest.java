@@ -1,13 +1,13 @@
 package org.zapodot.junit5.jms;
 
-import com.google.common.collect.ImmutableMap;
+import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.camel.component.ActiveMQComponent;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.impl.DefaultCamelContext;
-import org.apache.camel.impl.JndiRegistry;
+import org.apache.camel.management.JmxSystemPropertyKeys;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.zapodot.junit5.jms.annotations.BrokerConfig;
 import org.zapodot.junit5.jms.annotations.EmbeddedJms;
 
-import java.net.URI;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -29,23 +28,24 @@ class EmbeddedJmsBrokerCamelTest {
     private static final String JMS_DESTINATION_URI = "activemq:queue:inputQueue";
 
     @EmbeddedJms
-    private URI brokerUri;
-
-    private JndiRegistry registry;
+    private ActiveMQConnectionFactory activeMQConnectionFactory;
 
     private DefaultCamelContext camelContext;
+
+    private String defaultCamelJmxSetting;
 
     @BeforeEach
     public void setup() throws Exception {
         final ActiveMQComponent activeMQComponent = new ActiveMQComponent();
-        activeMQComponent.setBrokerURL(brokerUri.toString());
+        activeMQComponent.setConnectionFactory(activeMQConnectionFactory);
         activeMQComponent.setUseSingleConnection(true);
         activeMQComponent.setTransacted(false);
 
-        this.registry = new JndiRegistry(ImmutableMap.of("activemq", activeMQComponent));
+        this.defaultCamelJmxSetting = System.getProperty(JmxSystemPropertyKeys.DISABLED);
+        System.setProperty(JmxSystemPropertyKeys.DISABLED, Boolean.TRUE.toString());
 
-        this.camelContext = new DefaultCamelContext(registry);
-
+        this.camelContext = new DefaultCamelContext();
+        this.camelContext.addComponent("activemq", activeMQComponent);
         camelContext.setName(EmbeddedJmsBrokerCamelTest.class.getSimpleName() + "Context");
 
         try {
@@ -87,7 +87,9 @@ class EmbeddedJmsBrokerCamelTest {
     @AfterEach
     public void tearDown() throws Exception {
         this.camelContext.stop();
-        this.registry.close();
+        if (defaultCamelJmxSetting != null) {
+            System.setProperty(JmxSystemPropertyKeys.DISABLED, defaultCamelJmxSetting);
+        }
     }
 
 }
