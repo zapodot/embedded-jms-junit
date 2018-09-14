@@ -28,7 +28,7 @@ public class EmbeddedJMSBrokerHolder implements AutoCloseable, ConnectionFactory
 
     private final File tempDir;
 
-    private EmbeddedJMSBrokerHolder(final BrokerService brokerService, final File tempDir) {
+    EmbeddedJMSBrokerHolder(final BrokerService brokerService, final File tempDir) {
         Preconditions.checkNotNull(brokerService);
         this.brokerService = brokerService;
 
@@ -58,33 +58,39 @@ public class EmbeddedJMSBrokerHolder implements AutoCloseable, ConnectionFactory
     public static EmbeddedJMSBrokerHolder create(final String name, boolean marshal, boolean persistent) {
         final File tempDir = Files.createTempDir();
         LOGGER.debug("Created temporary directory: \"{}\"", tempDir.getAbsolutePath());
-        return new EmbeddedJMSBrokerHolder(createBrokerService(name, marshal, persistent, tempDir), tempDir);
+        return new EmbeddedJMSBrokerHolder(createAndConfigureBrokerService(new BrokerSettings(name,
+                                                                                              marshal,
+                                                                                              persistent,
+                                                                                              tempDir)), tempDir);
     }
 
-    private static BrokerService createBrokerService(final String name,
-                                                     boolean marshal,
-                                                     boolean persistent,
-                                                     File tempDir) {
-        final BrokerService brokerService = new BrokerService();
-        brokerService.setBrokerName(name);
+    private static BrokerService createAndConfigureBrokerService(final BrokerSettings brokerSettings) {
+        return configureBrokerService(new BrokerService(), brokerSettings);
+    }
+
+    static BrokerService configureBrokerService(final BrokerService brokerService,
+                                                final BrokerSettings brokerSettings) {
+        Preconditions.checkNotNull(brokerService);
+        Preconditions.checkNotNull(brokerSettings);
+        brokerService.setBrokerName(brokerSettings.getName());
         brokerService.setStartAsync(false);
-        brokerService.setPersistent(persistent);
+        brokerService.setPersistent(brokerSettings.isPersistent());
+        brokerService.setUseJmx(false);
+        brokerService.setDataDirectoryFile(brokerSettings.getTempDir());
+        brokerService.setUseShutdownHook(false);
         try {
-            if (persistent) {
+            if (brokerSettings.isPersistent()) {
                 brokerService.setPersistenceAdapter(new MemoryPersistenceAdapter());
             }
         } catch (IOException e) {
             throw new IllegalStateException("Could not enable the MemoryPersistenceAdapter");
         }
-        brokerService.setDataDirectoryFile(tempDir);
-
-        brokerService.setUseShutdownHook(false);
         try {
-            brokerService.addConnector(createVmTransportServer(createVmTransportUri(name, marshal)));
+            brokerService.addConnector(createVmTransportServer(createVmTransportUri(brokerSettings.getName(),
+                                                                                    brokerSettings.isMarshal())));
         } catch (Exception e) {
             throw new IllegalStateException("Could not create VM Transport URI", e);
         }
-        brokerService.setUseJmx(false);
         return brokerService;
     }
 
@@ -114,9 +120,12 @@ public class EmbeddedJMSBrokerHolder implements AutoCloseable, ConnectionFactory
 
     @Override
     public void close() throws Exception {
-        brokerService.stop();
-        if (tempDir.isDirectory()) {
-            MoreFiles.deleteRecursively(tempDir.toPath(), RecursiveDeleteOption.ALLOW_INSECURE);
+        try {
+            brokerService.stop();
+        } finally {
+            if (tempDir.isDirectory()) {
+                MoreFiles.deleteRecursively(tempDir.toPath(), RecursiveDeleteOption.ALLOW_INSECURE);
+            }
         }
     }
 }

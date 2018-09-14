@@ -62,6 +62,7 @@
         <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
         <maven-coveralls-plugin.version>4.3.0</maven-coveralls-plugin.version>
         <maven-cobertura-plugin.version>2.7</maven-cobertura-plugin.version>
+        <mockito.version>2.22.0</mockito.version>
     </properties>
     <issueManagement>
         <system>github</system>
