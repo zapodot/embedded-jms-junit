@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
 public @interface BrokerConfig {
     String name() default "";
 
-    boolean marshall() default false;
+    String marshall() default "";
 
-    boolean persistence() default false;
+    String persistence() default "";
 }

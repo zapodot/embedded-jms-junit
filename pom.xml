@@ -45,6 +45,8 @@
         <camel.version>2.22.1</camel.version>
         <guava.version>26.0-jre</guava.version>
         <java.version>1.8</java.version>
+        <javax.activation-api.version>1.2.0</javax.activation-api.version>
+        <javax.xml.bind.jaxb-api.version>2.3.0</javax.xml.bind.jaxb-api.version>
         <junit.version>4.12</junit.version>
         <junit-jupiter.version>5.3.1</junit-jupiter.version>
         <junit-platform.version>1.3.1</junit-platform.version>
@@ -251,6 +253,11 @@
                 <version>${activemq.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-kahadb-store</artifactId>
+                <version>${activemq.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
@@ -284,6 +291,17 @@
                 <artifactId>camel-test</artifactId>
                 <version>${camel.version}</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-test</artifactId>
+                <version>${camel.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>junit</groupId>
+                        <artifactId>junit</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.apache.activemq</groupId>

@@ -83,8 +83,8 @@ public class EmbeddedJmsBroker implements BeforeEachCallback, AfterEachCallback,
 
     private static EmbeddedJMSBrokerHolder createEmbeddedJMSBrokerHolderFromBrokerConfig(final BrokerConfiguration brokerConfig,
                                                                                          String nameFromTest) {
-        final boolean marshall = brokerConfig.getMarshal();
-        final boolean persistence = brokerConfig.getPersistenceEnabled();
+        final Boolean marshall = Optional.ofNullable(brokerConfig.getMarshal()).orElse(Boolean.FALSE);
+        final Boolean persistence = Optional.ofNullable(brokerConfig.getPersistenceEnabled()).orElse(Boolean.FALSE);
         final String name = Optional.ofNullable(brokerConfig.getName())
                                     .filter(n -> !Strings.isNullOrEmpty(n))
                                     .orElse(nameFromTest);

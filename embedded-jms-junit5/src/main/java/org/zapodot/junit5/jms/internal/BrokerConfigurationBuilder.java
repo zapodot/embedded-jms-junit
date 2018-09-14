@@ -34,8 +34,8 @@ public final class BrokerConfigurationBuilder {
     public static BrokerConfigurationBuilder fromBrokerConfigAnnotation(BrokerConfig brokerConfig) {
         return instance()
                 .withName(Strings.emptyToNull(brokerConfig.name()))
-                .withMarshal(brokerConfig.marshall())
-                .withPersistenceEnabled(brokerConfig.persistence());
+                .withMarshal(convertFromString(brokerConfig.marshall()))
+                .withPersistenceEnabled(convertFromString(brokerConfig.persistence()));
     }
 
     public BrokerConfigurationBuilder withName(String name) {
@@ -61,6 +61,10 @@ public final class BrokerConfigurationBuilder {
                     withPersistenceEnabled(b.getPersistenceEnabled());
                 });
         return this;
+    }
+
+    private static Boolean convertFromString(final String value) {
+        return Optional.ofNullable(Strings.emptyToNull(value)).map(Boolean::valueOf).orElse(null);
     }
 
     public BrokerConfiguration build() {
