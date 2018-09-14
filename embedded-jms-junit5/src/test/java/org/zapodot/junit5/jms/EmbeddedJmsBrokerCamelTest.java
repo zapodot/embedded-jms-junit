@@ -45,8 +45,6 @@ class EmbeddedJmsBrokerCamelTest {
         this.registry = new JndiRegistry(ImmutableMap.of("activemq", activeMQComponent));
 
         this.camelContext = new DefaultCamelContext(registry);
-        camelContext.getShutdownStrategy().setTimeout(1L);
-        camelContext.getShutdownStrategy().setTimeUnit(TimeUnit.MINUTES);
 
         camelContext.setName(EmbeddedJmsBrokerCamelTest.class.getSimpleName() + "Context");
 
@@ -83,7 +81,7 @@ class EmbeddedJmsBrokerCamelTest {
         template.start();
         template.sendBody(JMS_DESTINATION_URI, messageBody);
 
-        MockEndpoint.assertIsSatisfied(camelContext);
+        MockEndpoint.assertIsSatisfied(camelContext, 1L, TimeUnit.MINUTES);
     }
 
     @AfterEach
