@@ -46,6 +46,7 @@ class EmbeddedJmsBrokerCamelTest {
         this.camelContext = new DefaultCamelContext(registry);
         camelContext.getShutdownStrategy().setTimeout(1L);
         camelContext.getShutdownStrategy().setTimeUnit(TimeUnit.MINUTES);
+
         camelContext.setName(EmbeddedJmsBrokerCamelTest.class.getSimpleName() + "Context");
 
         try {
