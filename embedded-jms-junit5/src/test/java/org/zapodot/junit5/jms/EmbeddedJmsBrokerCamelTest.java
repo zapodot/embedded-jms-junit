@@ -15,7 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.zapodot.junit5.jms.annotations.BrokerConfig;
 import org.zapodot.junit5.jms.annotations.EmbeddedJms;
 
-import javax.jms.ConnectionFactory;
+import java.net.URI;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -29,7 +29,7 @@ class EmbeddedJmsBrokerCamelTest {
     private static final String JMS_DESTINATION_URI = "activemq:queue:inputQueue";
 
     @EmbeddedJms
-    private ConnectionFactory connectionFactory;
+    private URI brokerUri;
 
     private JndiRegistry registry;
 
@@ -38,8 +38,9 @@ class EmbeddedJmsBrokerCamelTest {
     @BeforeEach
     public void setup() throws Exception {
         final ActiveMQComponent activeMQComponent = new ActiveMQComponent();
-        activeMQComponent.setConnectionFactory(connectionFactory);
+        activeMQComponent.setBrokerURL(brokerUri.toString());
         activeMQComponent.setUseSingleConnection(true);
+        activeMQComponent.setTransacted(false);
 
         this.registry = new JndiRegistry(ImmutableMap.of("activemq", activeMQComponent));
 

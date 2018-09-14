@@ -14,7 +14,9 @@
         <module>embedded-jms-junit5</module>
     </modules>
     <name>Embedded JMS Testing utilities</name>
-    <description>Library that provides a JUnit rule for setting up unit test using an embedded JMS broker (ActiveMQ)
+    <description>Library that provides JUnit extensions setting up an embedded JMS broker (ActiveMQ) for testing.
+        For JUnit 4 it provides a @Rule, while for JUnit 5 Jupiter it provides an extension that may be enabled
+        by either the @ExtendWith or @RegisterExtension annotations provided by Jupiter
     </description>
     <url>https://github.com/zapodot/embedded-jms-junit</url>
     <developers>
