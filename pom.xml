@@ -6,7 +6,7 @@
 
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-jms-parent</artifactId>
-    <version>0.2</version>
+    <version>0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
         <module>embedded-jms-core</module>
