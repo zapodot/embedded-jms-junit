@@ -20,25 +20,56 @@ This library is distributed through the [Sonatype OSS repo](https://oss.sonatype
 Feedback is more than welcome. Feel free to create issues if you find bugs or have feature requests for future releases :-)
 
 ## Changelog
+* version 0.2: rewritten core and added support for JUnit 5 Jupiter
 * version 0.1: initial release
 
-## Usage
+# Usage
+## JUnit 5 (v. 0.2+)
+### Add dependency
+```xml
+<dependency>
+    <groupId>org.zapodot</groupId>
+    <artifactId>embedded-jms-junit5</artifactId>
+    <version>0.2</version>
+    <scope>test</scope>
+</dependency>
+```
+### Use ExtendWith to enable the extension and inject the connection factory using @EmbeddedJms
+```java 
+@ExtendWith(EmbeddedJmsBroker.class)
+class EmbeddedJmsBrokerRequestReplySpringTest {
+
+    private static final String TEST_MESSAGE = "Test message";
+
+    private static final String DESTINATION = "queue:destination";
+
+    /**
+    *  The type of property must be either ConnectionFactory, ActiveMQFactory or URI.
+    *  If it is a URI to the broker is injected
+    */
+    @EmbeddedJms 
+    private ConnectionFactory connectionFactory;
+
+    @DisplayName("My test")
+    @Test
+    void testJmsLogic() throws Exception {
+       // make JMS magic
+    }
+
+}
+``` 
+## JUnit 4
 ### Add dependency
 ```xml
 <dependency>
     <groupId>org.zapodot</groupId>
     <artifactId>embedded-jms-junit</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
     <scope>test</scope>
 </dependency>
 ```
 
-#### SBT
-```scala
-libraryDependencies += "org.zapodot" % "embedded-jms-junit" % "0.1" % "test"
-```
-
-### Add to Junit test
+### Add to JUnit4 test
 ```java
     @Rule
     public EmbeddedJmsRule embeddedJmsRule = EmbeddedJmsRule.builder().build();
