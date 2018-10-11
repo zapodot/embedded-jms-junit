@@ -25,6 +25,7 @@ Feedback is more than welcome. Feel free to create issues if you find bugs or ha
 
 # Usage
 ## JUnit 5 (v. 0.2+)
+More information on JMS support is found in the [project WIKI](//github.com/zapodot/embedded-jms-junit/wiki/Using-with-JUnit-5-Jupiter)
 ### Add dependency
 ```xml
 <dependency>
