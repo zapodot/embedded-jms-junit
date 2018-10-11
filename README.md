@@ -56,6 +56,12 @@ class EmbeddedJmsBrokerRequestReplySpringTest {
     void testJmsLogic() throws Exception {
        // make JMS magic
     }
+    
+    @DisplayName("parameterized test")
+    @Test
+    void connectionFactoryParameter(@EmbeddedJms ConnectionFactory connectionFactory) {
+        // perform JMS magic
+    }
 
 }
 ``` 
