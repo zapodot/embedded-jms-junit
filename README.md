@@ -6,6 +6,7 @@ embedded-jms-junit
 [![Apache V2 License](http://img.shields.io/badge/license-Apache%20V2-blue.svg)](//github.com/zapodot/embedded-jms-junit/blob/master/LICENSE)
 [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/zapodot/embedded-jms-junit.svg)](https://libraries.io/github/zapodot/embedded-db-junit)
 [![Coverage Status](https://coveralls.io/repos/github/zapodot/embedded-jms-junit/badge.svg?branch=master)](https://coveralls.io/github/zapodot/embedded-jms-junit?branch=master)
+[![DepShield Badge](https://depshield.sonatype.org/badges/zapodot/embedded-jms-junit/depshield.svg)](https://depshield.github.io)
 
 [JUnit](http://junit.org/) extension that provides a [ActiveMQ Embedded in-memory JMS Broker](http://activemq.apache.org/). 
 It should be compatible with all the usual JMS integration tools such as Apache Camel and Spring JMS Template. Inspired by the [Embedded DB JUnit Rule](//github.com/zapodot/embedded-db-junit) project.
