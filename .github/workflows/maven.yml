@@ -22,7 +22,10 @@ jobs:
       run: mvn test -B
       id: mvnTest
     - name: Coverage
-      run: mvn jacoco:report coveralls:report
+      env:
+        token: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        mvn -B -DrepoToken=$token jacoco:report coveralls:report
       if: startsWith(matrix.java, 11)
 
 #    - name: Deploy to Github packages
