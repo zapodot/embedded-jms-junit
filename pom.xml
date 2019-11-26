@@ -142,8 +142,8 @@
                         <links>
                             <link>https://junit.org/junit4/javadoc/latest/</link>
                             <link>https://junit.org/junit5/docs/current/api/</link>
-                            <link>http://docs.oracle.com/javase/8/docs/api/</link>
-                            <link>http://activemq.apache.org/maven/apidocs/</link>
+                            <link>https://docs.oracle.com/en/java/javase/11/docs/api/</link>
+                            <link>https://activemq.apache.org/maven/apidocs/</link>
                         </links>
                         <locale>en</locale>
                         <keywords>true</keywords>
@@ -177,17 +177,7 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>${maven-nexus-staging-plugin.version}</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>sonatype-nexus-staging</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
+
         </plugins>
     </build>
     <profiles>
@@ -208,6 +198,17 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>${maven-nexus-staging-plugin.version}</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>sonatype-nexus-staging</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>

@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: 
-        java: [8, 11]
+        java: [8, 11.0.5]
     name: Java ${{ matrix.java }} sample
     steps:
     - uses: actions/checkout@v1
@@ -24,7 +24,8 @@ jobs:
     - name: Deploy to Github packages
       env:
         token: ${{ secrets.GITHUB_TOKEN }}
+        packagesUrl: https://maven.pkg.github.com/zapodot
       run: |
-        mvn deploy -Dregistry=https://maven.pkg.github.com/zapodot -Dtoken=$token
+        mvn deploy -DaltSnapshotDeploymentRepository=sonatype-nexus-snapshots::$packagesUrl -Dtoken=$token
       id: deployGithubPackages
-      if: matrix.java == 11
+      if: startsWith(matrix.java, 11)
