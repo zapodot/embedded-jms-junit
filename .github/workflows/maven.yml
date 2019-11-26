@@ -26,6 +26,6 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         packagesUrl: https://maven.pkg.github.com/zapodot
       run: |
-        mvn deploy -DaltSnapshotDeploymentRepository=sonatype-nexus-snapshots::$packagesUrl -Dtoken=$token
+        mvn deploy -Dregistry=$packagesUrl -Dtoken=$token
       id: deployGithubPackages
       if: startsWith(matrix.java, 11)
