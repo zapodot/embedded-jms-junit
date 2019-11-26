@@ -21,11 +21,15 @@ jobs:
     - name: Run tests
       run: mvn test -B
       id: mvnTest
-    - name: Deploy to Github packages
-      env:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        packagesUrl: https://maven.pkg.github.com/zapodot
-      run: |
-        mvn deploy -Dregistry=$packagesUrl -Dtoken=$token
-      id: deployGithubPackages
-      if: startsWith(matrix.java, 11)
+    - name: Coverage
+      run: mvn cobertura:cobertura coveralls:report
+
+#    - name: Deploy to Github packages
+#      env:
+#        token: ${{ secrets.GITHUB_TOKEN }}
+#        packagesUrl: https://maven.pkg.github.com/zapodot
+#      run: |
+#        mvn deploy -Dregistry=$packagesUrl -Dtoken=$token
+#      id: deployGithubPackages
+#      if: startsWith(matrix.java, 11)
+

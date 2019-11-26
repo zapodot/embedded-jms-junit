@@ -1,7 +1,7 @@
 embedded-jms-junit
 =================
 
-[![Build Status](https://travis-ci.org/zapodot/embedded-jms-junit.svg)](https://travis-ci.org/zapodot/embedded-jms-junit)
+[![Build Status](https://github.com/zapodot/embedded-jms-junit/workflows/Java%20CI/badge.svg)](https://github.com/zapodot/embedded-jms-junit/actions?query=workflow%3A%22Java+CI%22)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.zapodot/embedded-jms-junit/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.zapodot/embedded-jms-junit)
 [![Apache V2 License](http://img.shields.io/badge/license-Apache%20V2-blue.svg)](//github.com/zapodot/embedded-jms-junit/blob/master/LICENSE)
 [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/zapodot/embedded-jms-junit.svg)](https://libraries.io/github/zapodot/embedded-db-junit)
