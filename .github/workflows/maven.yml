@@ -22,7 +22,8 @@ jobs:
       run: mvn test -B
       id: mvnTest
     - name: Coverage
-      run: mvn cobertura:cobertura coveralls:report
+      run: mvn jacoco:report coveralls:report
+      if: startsWith(matrix.java, 11)
 
 #    - name: Deploy to Github packages
 #      env:
