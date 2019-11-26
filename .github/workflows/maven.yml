@@ -27,4 +27,4 @@ jobs:
       run: |
         mvn deploy -Dregistry=https://maven.pkg.github.com/zapodot -Dtoken=$token
       id: deployGithubPackages
-      if: matrix.java == "11"
+      if: matrix.java == 11
