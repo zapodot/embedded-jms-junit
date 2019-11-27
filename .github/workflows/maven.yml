@@ -1,4 +1,4 @@
-name: Build, test and Deploy
+name: Build, test and deploy
 
 on: [push, pull_request]
 
@@ -9,6 +9,8 @@ jobs:
       matrix: 
         java: [8, 11.0.5]
     name: Java ${{ matrix.java }}
+    env:
+      CC_TEST_REPORTER_ID: 47b239597faea3da257baa211d7438ff8ba9047319a2c687110f4f8e41bb07f1
     steps:
     - uses: actions/checkout@v1
     - name: Set up Java ${{ matrix.java }}
@@ -18,16 +20,20 @@ jobs:
     - name: Build with Maven 
       run: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
       id: mvnInstall
+    - name: Prepare Coverage reporting
+      run: |
+        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        chmod +x ./cc-test-reporter
+        ./cc-test-reporter before-build
+      if: startsWith(matrix.java, 11)
     - name: Run tests
       run: mvn test -B
       id: mvnTest
     - name: Record coverage
-      uses: paambaati/codeclimate-action@v2.3.0
-      env:
-        CC_TEST_REPORTER_ID: 47b239597faea3da257baa211d7438ff8ba9047319a2c687110f4f8e41bb07f1
-      with:
-        coverageCommand: mvn test jacoco:report
-        debug: true
+      run: |
+        mvn jacoco:report
+        ./cc-test-reporter sum-coverage -p 3
+        ./cc-test-reporter after-build
       if: startsWith(matrix.java, 11)
 #    - name: Deploy to Github packages
 #      env:
