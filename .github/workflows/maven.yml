@@ -1,4 +1,4 @@
-name: Java CI
+name: Build, test and Deploy
 
 on: [push, pull_request]
 
@@ -16,7 +16,7 @@ jobs:
       with:
         java-version: ${{ matrix.java }}
     - name: Build with Maven 
-      run: mvn install -DskipTests=true -B -V
+      run: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
       id: mvnInstall
     - name: Run tests
       run: mvn test -B
