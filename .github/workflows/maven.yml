@@ -21,13 +21,14 @@ jobs:
     - name: Run tests
       run: mvn test -B
       id: mvnTest
-    - name: Coverage
+    - name: CodeClimate Coverage
+      uses: paambaati/codeclimate-action@v2.3.0
       env:
-        token: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        mvn -B -DrepoToken=$token jacoco:report coveralls:report
+        CC_TEST_REPORTER_ID: 47b239597faea3da257baa211d7438ff8ba9047319a2c687110f4f8e41bb07f1
+      with:
+        coverageCommand: jacoco:report
+        debug: true
       if: startsWith(matrix.java, 11)
-
 #    - name: Deploy to Github packages
 #      env:
 #        token: ${{ secrets.GITHUB_TOKEN }}
