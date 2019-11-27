@@ -26,7 +26,7 @@ jobs:
       env:
         CC_TEST_REPORTER_ID: 47b239597faea3da257baa211d7438ff8ba9047319a2c687110f4f8e41bb07f1
       with:
-        coverageCommand: jacoco:report
+        coverageCommand: mvn jacoco:report
         debug: true
       if: startsWith(matrix.java, 11)
 #    - name: Deploy to Github packages
