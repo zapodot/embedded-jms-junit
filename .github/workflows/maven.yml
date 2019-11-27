@@ -21,7 +21,7 @@ jobs:
     - name: Run tests
       run: mvn test -B
       id: mvnTest
-      if: !startsWith(matrix.java, 11)
+      if: not startsWith(matrix.java, 11)
     - name: Run tests and record coverage
       uses: paambaati/codeclimate-action@v2.3.0
       env:
