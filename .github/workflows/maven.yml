@@ -21,8 +21,7 @@ jobs:
     - name: Run tests
       run: mvn test -B
       id: mvnTest
-      if: not startsWith(matrix.java, 11)
-    - name: Run tests and record coverage
+    - name: Record coverage
       uses: paambaati/codeclimate-action@v2.3.0
       env:
         CC_TEST_REPORTER_ID: 47b239597faea3da257baa211d7438ff8ba9047319a2c687110f4f8e41bb07f1
