@@ -16,17 +16,18 @@ jobs:
       with:
         java-version: ${{ matrix.java }}
     - name: Build with Maven 
-      run: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+      run: mvn install -DskipTests=true -B -V
       id: mvnInstall
     - name: Run tests
       run: mvn test -B
       id: mvnTest
-    - name: CodeClimate Coverage
+      if: !startsWith(matrix.java, 11)
+    - name: Run tests and record coverage
       uses: paambaati/codeclimate-action@v2.3.0
       env:
         CC_TEST_REPORTER_ID: 47b239597faea3da257baa211d7438ff8ba9047319a2c687110f4f8e41bb07f1
       with:
-        coverageCommand: mvn jacoco:report
+        coverageCommand: mvn test jacoco:report
         debug: true
       if: startsWith(matrix.java, 11)
 #    - name: Deploy to Github packages
