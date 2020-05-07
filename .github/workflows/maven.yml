@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: 
-        java: [8, 11.0.5]
+        java: [8, 11]
     name: Java ${{ matrix.java }}
     env:
       CC_TEST_REPORTER_ID: 47b239597faea3da257baa211d7438ff8ba9047319a2c687110f4f8e41bb07f1
@@ -25,12 +25,7 @@ jobs:
       id: mvnTest
     - name: Record coverage
       run: |
-        mvn cobertura:cobertura
-      if: startsWith(matrix.java, 11)
-    - name: Report to Coveralls
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        mvn clean cobertura:cobertura coveralls:report
       if: startsWith(matrix.java, 11)
 #    - name: Deploy to Github packages
 #      env:
