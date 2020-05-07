@@ -20,20 +20,17 @@ jobs:
     - name: Build with Maven 
       run: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
       id: mvnInstall
-    - name: Prepare Coverage reporting
-      run: |
-        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-        chmod +x ./cc-test-reporter
-        ./cc-test-reporter before-build
-      if: startsWith(matrix.java, 11)
     - name: Run tests
       run: mvn test -B
       id: mvnTest
     - name: Record coverage
       run: |
-        mvn jacoco:report
-        ./cc-test-reporter sum-coverage -p 3 embedded-jms-core/target/site/jacoco/jacoco.xml embedded-jms-junit/target/site/jacoco/jacoco.xml embedded-jms-junit5/target/site/jacoco/jacoco.xml
-        ./cc-test-reporter after-build
+        mvn cobertura:cobertura
+      if: startsWith(matrix.java, 11)
+    - name: Report to Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
       if: startsWith(matrix.java, 11)
 #    - name: Deploy to Github packages
 #      env:
