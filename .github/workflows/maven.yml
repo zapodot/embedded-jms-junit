@@ -32,7 +32,7 @@ jobs:
     - name: Record coverage
       run: |
         mvn jacoco:report
-        ./cc-test-reporter sum-coverage -p 3
+        ./cc-test-reporter sum-coverage -p 3 embedded-jms-core/target/site/jacoco/jacoco.xml embedded-jms-junit/target/site/jacoco/jacoco.xml embedded-jms-junit5/target/site/jacoco/jacoco.xml
         ./cc-test-reporter after-build
       if: startsWith(matrix.java, 11)
 #    - name: Deploy to Github packages
