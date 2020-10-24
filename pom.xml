@@ -43,9 +43,9 @@
         <url>https://github.com/zapodot/embedded-jms-junit</url>
     </scm>
     <properties>
-        <activemq.version>5.15.10</activemq.version>
+        <activemq.version>5.16.0</activemq.version>
         <camel.version>2.24.1</camel.version>
-        <guava.version>28.1-jre</guava.version>
+        <guava.version>30.0-android</guava.version>
         <java.version>1.8</java.version>
         <javax.activation-api.version>1.2.0</javax.activation-api.version>
         <javax.xml.bind.jaxb-api.version>2.3.1</javax.xml.bind.jaxb-api.version>
