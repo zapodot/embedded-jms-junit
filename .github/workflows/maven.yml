@@ -1,24 +1,35 @@
 name: Build, test and deploy
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix: 
-        java: [8, 11]
+        java: [17, 21]
     name: Java ${{ matrix.java }}
     env:
       CC_TEST_REPORTER_ID: 47b239597faea3da257baa211d7438ff8ba9047319a2c687110f4f8e41bb07f1
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     - name: Set up Java ${{ matrix.java }}
-      uses: actions/setup-java@v1
+      uses: actions/setup-java@v4
       with:
+        distribution: 'temurin'
         java-version: ${{ matrix.java }}
-    - name: Build with Maven 
-      run: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+    - name: Cache Maven packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+    - name: Build with Maven
+      run: mvn install --no-transfer-progress -DskipTests=true -Dmaven.javadoc.skip=true -B -V
       id: mvnInstall
     - name: Run tests
       run: mvn test -B
@@ -26,13 +37,5 @@ jobs:
     - name: Record coverage
       run: |
         mvn clean cobertura:cobertura coveralls:report
-#      if: startsWith(matrix.java, 8)
-#    - name: Deploy to Github packages
-#      env:
-#        token: ${{ secrets.GITHUB_TOKEN }}
-#        packagesUrl: https://maven.pkg.github.com/zapodot
-#      run: |
-#        mvn deploy -Dregistry=$packagesUrl -Dtoken=$token
-#      id: deployGithubPackages
-#      if: startsWith(matrix.java, 11)
+
 
