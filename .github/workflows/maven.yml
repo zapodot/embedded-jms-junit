@@ -34,8 +34,17 @@ jobs:
     - name: Run tests
       run: mvn test -B
       id: mvnTest
-    - name: Record coverage
-      run: |
-        mvn clean cobertura:cobertura coveralls:report
-
+    - name: Coveralls Parallel
+      uses: coverallsapp/github-action@v2
+      with:
+        flag-name: run-${{ join(matrix.*, '-') }}
+        parallel: true
+  finish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@v2
+        with:
+          parallel-finished: true
 
