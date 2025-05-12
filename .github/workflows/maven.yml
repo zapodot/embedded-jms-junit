@@ -32,7 +32,7 @@ jobs:
       run: mvn install --no-transfer-progress -DskipTests=true -Dmaven.javadoc.skip=true -B -V
       id: mvnInstall
     - name: Run tests
-      run: mvn test -B
+      run: mvn test jacoco:report-aggregate -B
       id: mvnTest
     - name: Coveralls Parallel
       uses: coverallsapp/github-action@v2
