@@ -34,15 +34,8 @@ jobs:
     - name: Run tests
       run: ./mvnw test jacoco:report-aggregate -B
       id: mvnTest
-  finish:
-    needs: build
-    runs-on: ubuntu-latest
-    env:
-      CC_TEST_REPORTER_ID: 47b239597faea3da257baa211d7438ff8ba9047319a2c687110f4f8e41bb07f1
-    steps:
-      - name: Coveralls Finished
-        uses: coverallsapp/github-action@v2
-        with:
-          flag-name: run-${{ join(matrix.*, '-') }}
-          parallel-finished: true
-
+    - name: Coveralls Finished
+      uses: coverallsapp/github-action@v2
+      with:
+        flag-name: run-${{ join(matrix.*, '-') }}
+        parallel-finished: true
