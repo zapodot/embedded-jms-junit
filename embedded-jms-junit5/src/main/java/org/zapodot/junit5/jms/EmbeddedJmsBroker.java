@@ -2,12 +2,7 @@ package org.zapodot.junit5.jms;
 
 import com.google.common.base.Strings;
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.junit.jupiter.api.extension.AfterEachCallback;
-import org.junit.jupiter.api.extension.BeforeEachCallback;
-import org.junit.jupiter.api.extension.ExtensionContext;
-import org.junit.jupiter.api.extension.ParameterContext;
-import org.junit.jupiter.api.extension.ParameterResolver;
-import org.junit.jupiter.api.extension.TestInstancePostProcessor;
+import org.junit.jupiter.api.extension.*;
 import org.junit.platform.commons.util.AnnotationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,8 +29,6 @@ public class EmbeddedJmsBroker implements BeforeEachCallback, AfterEachCallback,
 
     private static final ExtensionContext.Namespace EMBEDDED_JMS_EXT = ExtensionContext.Namespace
             .create("org.zapodot.junit5.jms");
-
-    private static final String TEST_INSTANCE = "TestInstance";
 
     private static final String STORE_EMBEDDED_JMS_BROKER = "EmbeddedJmsBroker";
 
@@ -171,18 +164,11 @@ public class EmbeddedJmsBroker implements BeforeEachCallback, AfterEachCallback,
         final EmbeddedJMSBrokerHolder embeddedJmsBrokerHolder = getOrCreateEmbeddedJMSBrokerHolder(context);
         embeddedJmsBrokerHolder.start();
 
-        Object testInstance = context.getStore(EMBEDDED_JMS_EXT).get(TEST_INSTANCE);
-        if (testInstance == null) {
-            testInstance = context.getTestInstance().orElse(null);
-        }
-        Optional.ofNullable(testInstance)
-                .ifPresent(ti -> FieldInjector.injectToInstance(ti, embeddedJmsBrokerHolder));
+        context.getTestInstances().ifPresent(instance -> FieldInjector.injectToInstance(instance, embeddedJmsBrokerHolder));
     }
 
     @Override
     public void postProcessTestInstance(final Object testInstance, final ExtensionContext context) {
-        LOGGER.debug("postProcessTestInstance instance: \"{}\"", testInstance);
-        context.getStore(EMBEDDED_JMS_EXT).put(TEST_INSTANCE, testInstance);
 
         createBrokerConfigurationFromContext(context)
                 .ifPresent(c -> context.getStore(EMBEDDED_JMS_EXT).put(STORE_BROKER_CONFIGURATION, c));
