@@ -32,10 +32,12 @@ jobs:
     - name: Run tests
       run: ./mvnw test jacoco:report-aggregate -B
       id: mvnTest
-    - name: Coveralls Finished
+    - name: Coveralls Parallel
       uses: coverallsapp/github-action@v2
       with:
         flag-name: run-${{ join(matrix.*, '-') }}
+        debug: true
+        compare-ref: master
         parallel: true
   finish:
     needs: build
