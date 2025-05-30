@@ -29,16 +29,11 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
     - name: Build with Maven
-      run: mvn install --no-transfer-progress -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+      run: ./mvnw install --no-transfer-progress -DskipTests=true -Dmaven.javadoc.skip=true -B -V
       id: mvnInstall
     - name: Run tests
-      run: mvn test jacoco:report-aggregate -B
+      run: ./mvnw test jacoco:report-aggregate -B
       id: mvnTest
-    - name: Coveralls Parallel
-      uses: coverallsapp/github-action@v2
-      with:
-        flag-name: run-${{ join(matrix.*, '-') }}
-        parallel: true
   finish:
     needs: build
     runs-on: ubuntu-latest
@@ -46,5 +41,6 @@ jobs:
       - name: Coveralls Finished
         uses: coverallsapp/github-action@v2
         with:
+          flag-name: run-${{ join(matrix.*, '-') }}
           parallel-finished: true
 
