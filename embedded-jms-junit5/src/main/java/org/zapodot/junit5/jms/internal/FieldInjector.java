@@ -23,7 +23,7 @@ public class FieldInjector {
 
     public static void injectToInstance(final TestInstances testInstances, final EmbeddedJMSBrokerHolder embeddedJMSBrokerHolder) {
         testInstances.getAllInstances().forEach(testInstance -> {
-            InjectableFieldsAccessor.findInjectableFields(testInstances.getClass())
+            InjectableFieldsAccessor.findInjectableFields(testInstance.getClass())
                     .forEach(field -> injectConnectionFactoryOrURI(testInstance, field, embeddedJMSBrokerHolder));
         });
     }
